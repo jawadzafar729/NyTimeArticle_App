@@ -1,0 +1,77 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion versions.compileSdk
+    defaultConfig {
+        applicationId "com.example.nytimes"
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.compileSdk
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    sourceSets.test.resources.srcDirs += ["src/main"]
+
+    sourceSets {
+        main {
+            assets.srcDirs = ['src/main/assets', 'src/main/assets/']
+        }
+    }
+
+    buildTypes.each {
+        buildTypes.each {
+            it.buildConfigField 'String', 'API_KEY', "\"cdUar5iB34vC4CAc9AN4i1Pi1UM6hamz\""
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            testCoverageEnabled true
+        }
+    }
+
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation libraries.appCompat
+    implementation libraries.design
+    implementation libraries.constraintLayout
+    implementation libraries.dagger
+    implementation libraries.daggerSupport
+    annotationProcessor libraries.daggerProcessor
+    annotationProcessor libraries.daggerAndroidApt
+    implementation libraries.okhttpLogger
+    implementation libraries.gson
+    implementation libraries.retrofite
+    implementation libraries.retrofitConverter
+    implementation libraries.retrofitRxAdapter
+    implementation libraries.butterKnife
+    implementation libraries.rxJava
+    implementation libraries.rxAndroid
+    implementation libraries.idling
+
+    annotationProcessor libraries.butterKnifeCompiler
+    implementation libraries.lifecycleExtensions
+    annotationProcessor libraries.lifecycleCompiler
+    implementation libraries.fresco
+    implementation project(':domain')
+    implementation project(':data')
+    testImplementation libraries.junit
+    androidTestImplementation libraries.testRunner
+    androidTestImplementation libraries.espressoCore
+    androidTestImplementation libraries.idlingConcurrent
+    androidTestImplementation libraries.testRules
+    testImplementation libraries.archCoreTest
+    testImplementation libraries.mockito
+//    androidTestImplementation libraries.mockitoAndroid
+}
